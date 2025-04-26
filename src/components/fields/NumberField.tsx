@@ -1,0 +1,51 @@
+import React from 'react';
+import {useFragment, graphql} from 'react-relay';
+
+interface NumberFieldProps {
+  renderer: {
+    __typename: string;
+    id: string;
+  };
+  onChange?: (value: string) => void;
+}
+
+function NumberField({renderer, onChange}: NumberFieldProps) {
+  const data = useFragment(
+    graphql`
+      fragment NumberField_renderer on NumberField {
+        id
+        name
+        value
+        required
+        min
+        max
+      }
+    `,
+    renderer,
+  );
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (onChange) {
+      onChange(e.target.value);
+    }
+  };
+
+  return (
+    <div className="mb-4">
+      <label className="block text-gray-700 text-sm font-bold mb-2">
+        {data.name} {data.required && <span className="text-red-500">*</span>}
+      </label>
+      <input
+        type="number"
+        value={data.value || ''}
+        onChange={handleChange}
+        min={data.min}
+        max={data.max}
+        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        required={data.required}
+      />
+    </div>
+  );
+}
+
+export default NumberField;
