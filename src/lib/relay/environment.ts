@@ -12,18 +12,27 @@ const fetchRelay: FetchFunction = async (
   request: RequestParameters,
   variables: Variables
 ) => {
+  console.log("Relay request:", { id: request.id, name: request.name });
+
   const response = await fetch("http://localhost:3000/api/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      id: request.id,
       query: request.text,
       variables,
     }),
   });
 
-  return response.json();
+  const result = await response.json();
+
+  if (result.errors) {
+    console.error("GraphQL errors:", result.errors);
+  }
+
+  return result;
 };
 
 function createEnvironment() {

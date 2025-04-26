@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5db66a9cb45e45a6f79c3a9a61b5c178>>
+ * @generated SignedSource<<a86bde4a43d400985b3e233e01d52d8b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,6 @@
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type TaskFieldRenderer_field$data = {
-  readonly id: string;
   readonly renderer: {
     readonly __typename: "CheckBoxField";
     readonly __fragmentPropName: string | null | undefined;
@@ -77,13 +76,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "TaskFieldRenderer_field",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
@@ -239,6 +231,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8c64debde7723459796945d36976f5d5";
+(node as any).hash = "d450570adeed294e1e262d19e51c583c";
 
 export default node;

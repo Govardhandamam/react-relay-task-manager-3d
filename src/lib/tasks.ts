@@ -78,7 +78,7 @@ interface Task {
 }
 
 // Sample tasks data
-const tasks: Task[] = [
+export const tasks: Task[] = [
   {
     id: uuidv4(),
     title: "Complete Project Proposal",

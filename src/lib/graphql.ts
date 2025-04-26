@@ -14,7 +14,24 @@ import {
   GraphQLUnionType,
 } from "graphql";
 
-import { allTasks, findTask } from "./tasks";
+import { allTasks, findTask, tasks } from "./tasks";
+
+const JSDependencyType = new GraphQLScalarType({
+  name: "JSDependency",
+  serialize: (value) => value,
+});
+
+const JSDependencyField = {
+  args: {
+    module: { type: new GraphQLNonNull(GraphQLString) },
+    id: { type: GraphQLString },
+  },
+  type: new GraphQLNonNull(JSDependencyType),
+  resolve: async (_: unknown, { module }: { module: unknown }) => {
+    seenDataDrivenDependencies.add(module);
+    return module;
+  },
+};
 
 const seenDataDrivenDependencies = new Set();
 
@@ -38,8 +55,11 @@ const NumberFieldType = new GraphQLObjectType({
   fields: {
     id: { type: new GraphQLNonNull(GraphQLID) },
     name: { type: new GraphQLNonNull(GraphQLString) },
-    value: { type: GraphQLFloat },
+    value: { type: GraphQLString },
     required: { type: new GraphQLNonNull(GraphQLBoolean) },
+    min: { type: GraphQLFloat },
+    max: { type: GraphQLFloat },
+    js: JSDependencyField,
   },
 });
 
@@ -50,6 +70,7 @@ const SingleLineTextFieldType = new GraphQLObjectType({
     name: { type: new GraphQLNonNull(GraphQLString) },
     value: { type: GraphQLString },
     required: { type: new GraphQLNonNull(GraphQLBoolean) },
+    js: JSDependencyField,
   },
 });
 
@@ -60,6 +81,7 @@ const MultiLineTextFieldType = new GraphQLObjectType({
     name: { type: new GraphQLNonNull(GraphQLString) },
     value: { type: GraphQLString },
     required: { type: new GraphQLNonNull(GraphQLBoolean) },
+    js: JSDependencyField,
   },
 });
 
@@ -75,6 +97,7 @@ const SelectDropdownFieldType = new GraphQLObjectType({
       ),
     },
     required: { type: new GraphQLNonNull(GraphQLBoolean) },
+    js: JSDependencyField,
   },
 });
 
@@ -83,8 +106,9 @@ const CheckBoxFieldType = new GraphQLObjectType({
   fields: {
     id: { type: new GraphQLNonNull(GraphQLID) },
     name: { type: new GraphQLNonNull(GraphQLString) },
-    checked: { type: new GraphQLNonNull(GraphQLBoolean) },
+    checked: { type: GraphQLBoolean },
     required: { type: new GraphQLNonNull(GraphQLBoolean) },
+    js: JSDependencyField,
   },
 });
 
@@ -100,6 +124,7 @@ const RadioButtonFieldType = new GraphQLObjectType({
       ),
     },
     required: { type: new GraphQLNonNull(GraphQLBoolean) },
+    js: JSDependencyField,
   },
 });
 
@@ -118,8 +143,14 @@ const StatusFieldType = new GraphQLObjectType({
   fields: {
     id: { type: new GraphQLNonNull(GraphQLID) },
     name: { type: new GraphQLNonNull(GraphQLString) },
-    value: { type: new GraphQLNonNull(TaskStatusEnum) },
+    value: { type: GraphQLString },
+    options: {
+      type: new GraphQLNonNull(
+        new GraphQLList(new GraphQLNonNull(GraphQLString))
+      ),
+    },
     required: { type: new GraphQLNonNull(GraphQLBoolean) },
+    js: JSDependencyField,
   },
 });
 
@@ -128,8 +159,9 @@ const DateFieldType = new GraphQLObjectType({
   fields: {
     id: { type: new GraphQLNonNull(GraphQLID) },
     name: { type: new GraphQLNonNull(GraphQLString) },
-    value: { type: DateTimeType },
+    value: { type: GraphQLString },
     required: { type: new GraphQLNonNull(GraphQLBoolean) },
+    js: JSDependencyField,
   },
 });
 
@@ -138,8 +170,9 @@ const DateTimeFieldType = new GraphQLObjectType({
   fields: {
     id: { type: new GraphQLNonNull(GraphQLID) },
     name: { type: new GraphQLNonNull(GraphQLString) },
-    value: { type: DateTimeType },
+    value: { type: GraphQLString },
     required: { type: new GraphQLNonNull(GraphQLBoolean) },
+    js: JSDependencyField,
   },
 });
 
@@ -253,6 +286,10 @@ const QueryType = new GraphQLObjectType({
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
+    },
+    tasks: {
+      type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(TaskType))),
+      resolve: () => tasks,
     },
   },
 });

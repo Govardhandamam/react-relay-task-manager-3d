@@ -1,6 +1,6 @@
 /**
- * @generated SignedSource<<9d09b560eeb88ccf8738fc4f71650e34>>
- * @relayHash 5960c722ce43ae4b6a7ea68c51ad3c6c
+ * @generated SignedSource<<a4f46b9f1b33535235406ab3650fa680>>
+ * @relayHash 9be5a3f3a884431b8b7805af43b8e813
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-// @relayRequestID 5960c722ce43ae4b6a7ea68c51ad3c6c
+// @relayRequestID 9be5a3f3a884431b8b7805af43b8e813
 // @indirectDataDrivenDependency TaskFieldRenderer_field.renderer {"branches":{"CheckBoxField":{"component":"CheckBoxField","fragment":"CheckBoxField_renderer$normalization.graphql"},"DateField":{"component":"DateField","fragment":"DateField_renderer$normalization.graphql"},"DateTimeField":{"component":"DateTimeField","fragment":"DateTimeField_renderer$normalization.graphql"},"MultiLineTextField":{"component":"MultiLineTextField","fragment":"MultiLineTextField_renderer$normalization.graphql"},"NumberField":{"component":"NumberField","fragment":"NumberField_renderer$normalization.graphql"},"RadioButtonField":{"component":"RadioButtonField","fragment":"RadioButtonField_renderer$normalization.graphql"},"SelectDropdownField":{"component":"SelectDropdownField","fragment":"SelectDropdownField_renderer$normalization.graphql"},"SingleLineTextField":{"component":"SingleLineTextField","fragment":"SingleLineTextField_renderer$normalization.graphql"},"StatusField":{"component":"StatusField","fragment":"StatusField_renderer$normalization.graphql"}},"plural":false}
 
 import { ConcreteRequest } from 'relay-runtime';
@@ -18,9 +18,6 @@ export type pageTasksPageQuery$variables = Record<PropertyKey, never>;
 export type pageTasksPageQuery$data = {
   readonly tasks: ReadonlyArray<{
     readonly fields: ReadonlyArray<{
-      readonly id: string;
-      readonly name: string;
-      readonly required: boolean;
       readonly " $fragmentSpreads": FragmentRefs<"TaskFieldRenderer_field">;
     }>;
     readonly id: string;
@@ -45,20 +42,6 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "title",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "required",
   "storageKey": null
 };
 return {
@@ -86,9 +69,6 @@ return {
             "name": "fields",
             "plural": true,
             "selections": [
-              (v0/*: any*/),
-              (v2/*: any*/),
-              (v3/*: any*/),
               {
                 "args": null,
                 "kind": "FragmentSpread",
@@ -128,9 +108,6 @@ return {
             "name": "fields",
             "plural": true,
             "selections": [
-              (v0/*: any*/),
-              (v2/*: any*/),
-              (v3/*: any*/),
               {
                 "alias": null,
                 "args": [
@@ -299,7 +276,7 @@ return {
     ]
   },
   "params": {
-    "id": "5960c722ce43ae4b6a7ea68c51ad3c6c",
+    "id": "9be5a3f3a884431b8b7805af43b8e813",
     "metadata": {},
     "name": "pageTasksPageQuery",
     "operationKind": "query",
@@ -308,7 +285,7 @@ return {
 };
 })();
 
-(node as any).hash = "088f244addff47daf1230c7939686eb8";
+(node as any).hash = "7ca1f96c1e38d8a1da278415e7020d71";
 
 import { PreloadableQueryRegistry } from 'relay-runtime';
 PreloadableQueryRegistry.set(node.params.id, node);

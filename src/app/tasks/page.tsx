@@ -9,9 +9,6 @@ const pageTasksPageQuery = graphql`
       id
       title
       fields {
-        id
-        name
-        required
         ...TaskFieldRenderer_field
       }
     }

@@ -11,7 +11,6 @@ export function TaskFieldRenderer({ data, onChange }: TaskFieldRendererProps) {
   const fieldData = useFragment(
     graphql`
       fragment TaskFieldRenderer_field on TaskField {
-        id
         renderer @match {
           __typename
           ...NumberField_renderer @module(name: "NumberField")

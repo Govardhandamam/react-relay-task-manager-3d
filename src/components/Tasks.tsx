@@ -11,6 +11,11 @@ export const Tasks = (props: { queryRef: unknown | undefined }) => {
     PageTaskQuery,
     props.queryRef as PreloadedQuery<pageTasksPageQuery>
   );
+
+  if (!data || !data.tasks) {
+    return <div>Loading tasks...</div>;
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Tasks</h1>
@@ -19,12 +24,12 @@ export const Tasks = (props: { queryRef: unknown | undefined }) => {
           <div key={task.id} className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-semibold mb-4">{task.title}</h2>
             <div className="space-y-4">
-              {task.fields.map((field) => (
+              {task.fields.map((field, idx) => (
                 <TaskFieldRenderer
-                  key={field.id}
+                  key={idx}
                   data={field}
                   onChange={(value: unknown) => {
-                    console.log(`Field ${field.name} changed to:`, value);
+                    console.log(`Field ${field} changed to:`, value);
                   }}
                 />
               ))}

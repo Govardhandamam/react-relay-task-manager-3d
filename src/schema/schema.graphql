@@ -30,9 +30,6 @@ type Task {
 }
 
 type TaskField {
-  id: ID!
-  name: String!
-  required: Boolean!
   renderer(supported: [String]): TaskFieldRendererUnion
 }
 
