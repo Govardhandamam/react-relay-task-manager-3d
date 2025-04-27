@@ -176,9 +176,9 @@ const DateTimeFieldType = new GraphQLObjectType({
   },
 });
 
-// Define the TaskField union
-const TaskFieldUnion = new GraphQLUnionType({
-  name: "TaskField",
+// Define the TaskFieldRenderer union first
+const TaskFieldRendererUnion = new GraphQLUnionType({
+  name: "TaskFieldRendererUnion",
   types: [
     NumberFieldType,
     SingleLineTextFieldType,
@@ -195,6 +195,20 @@ const TaskFieldUnion = new GraphQLUnionType({
   },
 });
 
+// Define the TaskField type
+const TaskFieldType = new GraphQLObjectType({
+  name: "TaskField",
+  fields: {
+    renderer: {
+      type: TaskFieldRendererUnion,
+      args: {
+        supported: { type: new GraphQLList(GraphQLString) },
+      },
+      resolve: (source) => source,
+    },
+  },
+});
+
 // Define the Task type
 const TaskType = new GraphQLObjectType({
   name: "Task",
@@ -206,7 +220,7 @@ const TaskType = new GraphQLObjectType({
     dueDate: { type: DateTimeType },
     fields: {
       type: new GraphQLNonNull(
-        new GraphQLList(new GraphQLNonNull(TaskFieldUnion))
+        new GraphQLList(new GraphQLNonNull(TaskFieldType))
       ),
     },
     createdAt: { type: new GraphQLNonNull(DateTimeType) },

@@ -1,16 +1,14 @@
-import React from 'react';
-import {useFragment, graphql} from 'react-relay';
+import { CheckBoxField_renderer$key } from "@/__generated__/CheckBoxField_renderer.graphql";
+import React from "react";
+import { useFragment, graphql } from "react-relay";
 
 interface CheckBoxFieldProps {
-  renderer: {
-    __typename: string;
-    id: string;
-  };
+  renderer: CheckBoxField_renderer$key;
   onChange?: (checked: boolean) => void;
 }
 
-function CheckBoxField({renderer, onChange}: CheckBoxFieldProps) {
-  const data = useFragment(
+function CheckBoxField({ renderer, onChange }: CheckBoxFieldProps) {
+  const data = useFragment<CheckBoxField_renderer$key>(
     graphql`
       fragment CheckBoxField_renderer on CheckBoxField {
         id
@@ -19,7 +17,7 @@ function CheckBoxField({renderer, onChange}: CheckBoxFieldProps) {
         required
       }
     `,
-    renderer,
+    renderer
   ) as {
     id: string;
     name: string;

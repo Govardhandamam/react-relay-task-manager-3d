@@ -1,16 +1,14 @@
-import React from 'react';
-import {useFragment, graphql} from 'react-relay';
+import { NumberField_renderer$key } from "@/__generated__/NumberField_renderer.graphql";
+import React from "react";
+import { useFragment, graphql } from "react-relay";
 
 interface NumberFieldProps {
-  renderer: {
-    __typename: string;
-    id: string;
-  };
+  renderer: NumberField_renderer$key;
   onChange?: (value: string) => void;
 }
 
-function NumberField({renderer, onChange}: NumberFieldProps) {
-  const data = useFragment(
+function NumberField({ renderer, onChange }: NumberFieldProps) {
+  const data = useFragment<NumberField_renderer$key>(
     graphql`
       fragment NumberField_renderer on NumberField {
         id
@@ -21,7 +19,7 @@ function NumberField({renderer, onChange}: NumberFieldProps) {
         max
       }
     `,
-    renderer,
+    renderer
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,12 +35,12 @@ function NumberField({renderer, onChange}: NumberFieldProps) {
       </label>
       <input
         type="number"
-        value={data.value || ''}
+        value={data.value || ""}
         onChange={handleChange}
-        min={data.min}
-        max={data.max}
+        min={data.min ?? undefined}
+        max={data.max ?? undefined}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required={data.required}
+        required={data.required ?? false}
       />
     </div>
   );

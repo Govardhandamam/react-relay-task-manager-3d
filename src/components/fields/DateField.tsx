@@ -1,16 +1,14 @@
-import React from 'react';
-import {useFragment, graphql} from 'react-relay';
+import { DateField_renderer$key } from "@/__generated__/DateField_renderer.graphql";
+import React from "react";
+import { useFragment, graphql } from "react-relay";
 
 interface DateFieldProps {
-  renderer: {
-    __typename: string;
-    id: string;
-  };
+  renderer: DateField_renderer$key;
   onChange?: (value: string) => void;
 }
 
-function DateField({renderer, onChange}: DateFieldProps) {
-  const data = useFragment(
+function DateField({ renderer, onChange }: DateFieldProps) {
+  const data = useFragment<DateField_renderer$key>(
     graphql`
       fragment DateField_renderer on DateField {
         id
@@ -19,7 +17,7 @@ function DateField({renderer, onChange}: DateFieldProps) {
         required
       }
     `,
-    renderer,
+    renderer
   ) as {
     id: string;
     name: string;
@@ -40,7 +38,7 @@ function DateField({renderer, onChange}: DateFieldProps) {
       </label>
       <input
         type="date"
-        value={data.value || ''}
+        value={data.value || ""}
         onChange={handleChange}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         required={data.required}

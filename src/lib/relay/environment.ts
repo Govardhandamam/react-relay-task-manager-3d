@@ -6,7 +6,10 @@ import {
   FetchFunction,
   RequestParameters,
   Variables,
+  OperationLoader,
+  NormalizationSplitOperation,
 } from "relay-runtime";
+import moduleLoader from "../moduleLoader";
 
 const fetchRelay: FetchFunction = async (
   request: RequestParameters,
@@ -34,18 +37,44 @@ const fetchRelay: FetchFunction = async (
 
   return result;
 };
+const IS_SERVER = typeof window === typeof undefined;
+const CLIENT_DEBUG = false;
+const SERVER_DEBUG = false;
 
 function createEnvironment() {
-  return new Environment({
+  // Operation loader is reponsible for loading JS modules/components
+  // for data-processing and rendering
+  const operationLoader: OperationLoader = {
+    get: (name: string): NormalizationSplitOperation | null | undefined => {
+      const result = moduleLoader(name).get();
+      return result as NormalizationSplitOperation | null | undefined;
+    },
+    load: async (
+      reference: unknown
+    ): Promise<NormalizationSplitOperation | null | undefined> => {
+      const name = reference as string;
+      const result = await moduleLoader(name).load();
+      return result as NormalizationSplitOperation | null | undefined;
+    },
+  };
+  const environment = new Environment({
     network: Network.create(fetchRelay),
-    store: new Store(new RecordSource()),
+    store: new Store(new RecordSource(), { operationLoader }),
+    operationLoader,
+    isServer: IS_SERVER,
+    log(event) {
+      if ((IS_SERVER && SERVER_DEBUG) || (!IS_SERVER && CLIENT_DEBUG)) {
+        console.debug("[relay environment event]", event);
+      }
+    },
   });
+  return environment;
 }
 
 let environment: Environment | undefined;
 
 export function getClientEnvironment() {
-  if (typeof window === "undefined") {
+  if (IS_SERVER) {
     return createEnvironment();
   }
 

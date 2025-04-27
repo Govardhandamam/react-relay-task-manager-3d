@@ -5,7 +5,7 @@ import PageTaskQuery, {
   type pageTasksPageQuery,
 } from "../__generated__/pageTasksPageQuery.graphql";
 import { TaskFieldRenderer } from "@/components/TaskFieldRenderer";
-
+import { TaskFieldRenderer_field$key } from "../__generated__/TaskFieldRenderer_field.graphql";
 export const Tasks = (props: { queryRef: unknown | undefined }) => {
   const data = usePreloadedQuery<pageTasksPageQuery>(
     PageTaskQuery,
@@ -24,15 +24,17 @@ export const Tasks = (props: { queryRef: unknown | undefined }) => {
           <div key={task.id} className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-semibold mb-4">{task.title}</h2>
             <div className="space-y-4">
-              {task.fields.map((field, idx) => (
-                <TaskFieldRenderer
-                  key={idx}
-                  data={field}
-                  onChange={(value: unknown) => {
-                    console.log(`Field ${field} changed to:`, value);
-                  }}
-                />
-              ))}
+              {task.fields.map(
+                (field: TaskFieldRenderer_field$key, idx: number) => (
+                  <TaskFieldRenderer
+                    key={idx}
+                    data={field}
+                    onChange={(value: unknown) => {
+                      console.log(`Field ${field} changed to:`, value);
+                    }}
+                  />
+                )
+              )}
             </div>
           </div>
         ))}

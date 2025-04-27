@@ -1,16 +1,14 @@
-import React from 'react';
-import {useFragment, graphql} from 'react-relay';
+import { RadioButtonField_renderer$key } from "@/__generated__/RadioButtonField_renderer.graphql";
+import React from "react";
+import { useFragment, graphql } from "react-relay";
 
 interface RadioButtonFieldProps {
-  renderer: {
-    __typename: string;
-    id: string;
-  };
+  renderer: RadioButtonField_renderer$key;
   onChange?: (value: string) => void;
 }
 
-function RadioButtonField({renderer, onChange}: RadioButtonFieldProps) {
-  const data = useFragment(
+function RadioButtonField({ renderer, onChange }: RadioButtonFieldProps) {
+  const data = useFragment<RadioButtonField_renderer$key>(
     graphql`
       fragment RadioButtonField_renderer on RadioButtonField {
         id
@@ -20,14 +18,8 @@ function RadioButtonField({renderer, onChange}: RadioButtonFieldProps) {
         required
       }
     `,
-    renderer,
-  ) as {
-    id: string;
-    name: string;
-    value?: string;
-    options: string[];
-    required: boolean;
-  };
+    renderer
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -50,7 +42,7 @@ function RadioButtonField({renderer, onChange}: RadioButtonFieldProps) {
               checked={data.value === option}
               onChange={handleChange}
               className="mr-2"
-              required={data.required}
+              required={!!data.required}
             />
             <span className="text-gray-700">{option}</span>
           </label>

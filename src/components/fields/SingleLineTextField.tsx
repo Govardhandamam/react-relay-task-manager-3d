@@ -1,16 +1,14 @@
-import React from 'react';
-import {useFragment, graphql} from 'react-relay';
+import { SingleLineTextField_renderer$key } from "@/__generated__/SingleLineTextField_renderer.graphql";
+import React from "react";
+import { useFragment, graphql } from "react-relay";
 
 interface SingleLineTextFieldProps {
-  renderer: {
-    __typename: string;
-    id: string;
-  };
+  renderer: SingleLineTextField_renderer$key;
   onChange?: (value: string) => void;
 }
 
-function SingleLineTextField({renderer, onChange}: SingleLineTextFieldProps) {
-  const data = useFragment(
+function SingleLineTextField({ renderer, onChange }: SingleLineTextFieldProps) {
+  const data = useFragment<SingleLineTextField_renderer$key>(
     graphql`
       fragment SingleLineTextField_renderer on SingleLineTextField {
         id
@@ -19,13 +17,8 @@ function SingleLineTextField({renderer, onChange}: SingleLineTextFieldProps) {
         required
       }
     `,
-    renderer,
-  ) as {
-    id: string;
-    name: string;
-    value?: string;
-    required: boolean;
-  };
+    renderer
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -40,10 +33,10 @@ function SingleLineTextField({renderer, onChange}: SingleLineTextFieldProps) {
       </label>
       <input
         type="text"
-        value={data.value || ''}
+        value={data.value || ""}
         onChange={handleChange}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required={data.required}
+        required={!!data.required}
       />
     </div>
   );

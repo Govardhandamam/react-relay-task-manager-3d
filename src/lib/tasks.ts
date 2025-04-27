@@ -43,6 +43,7 @@ interface RadioButtonField extends BaseField {
 interface StatusField extends BaseField {
   __typename: "StatusField";
   value: "TODO" | "IN_PROGRESS" | "DONE" | "CANCELLED";
+  options: string[];
 }
 
 interface DateField extends BaseField {
@@ -167,6 +168,7 @@ export const tasks: Task[] = [
         name: "Code Quality",
         value: "DONE",
         required: true,
+        options: ["TODO", "IN_PROGRESS", "DONE", "CANCELLED"],
       },
       {
         id: uuidv4(),

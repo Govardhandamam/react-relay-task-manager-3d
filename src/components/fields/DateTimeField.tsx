@@ -1,16 +1,14 @@
-import React from 'react';
-import {useFragment, graphql} from 'react-relay';
+import { DateTimeField_renderer$key } from "@/__generated__/DateTimeField_renderer.graphql";
+import React from "react";
+import { useFragment, graphql } from "react-relay";
 
 interface DateTimeFieldProps {
-  renderer: {
-    __typename: string;
-    id: string;
-  };
+  renderer: DateTimeField_renderer$key;
   onChange?: (value: string) => void;
 }
 
-function DateTimeField({renderer, onChange}: DateTimeFieldProps) {
-  const data = useFragment(
+function DateTimeField({ renderer, onChange }: DateTimeFieldProps) {
+  const data = useFragment<DateTimeField_renderer$key>(
     graphql`
       fragment DateTimeField_renderer on DateTimeField {
         id
@@ -19,7 +17,7 @@ function DateTimeField({renderer, onChange}: DateTimeFieldProps) {
         required
       }
     `,
-    renderer,
+    renderer
   ) as {
     id: string;
     name: string;
@@ -40,7 +38,7 @@ function DateTimeField({renderer, onChange}: DateTimeFieldProps) {
       </label>
       <input
         type="datetime-local"
-        value={data.value || ''}
+        value={data.value || ""}
         onChange={handleChange}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         required={data.required}

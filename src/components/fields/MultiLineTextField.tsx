@@ -1,16 +1,14 @@
-import React from 'react';
-import {useFragment, graphql} from 'react-relay';
+import { MultiLineTextField_renderer$key } from "@/__generated__/MultiLineTextField_renderer.graphql";
+import React from "react";
+import { useFragment, graphql } from "react-relay";
 
 interface MultiLineTextFieldProps {
-  renderer: {
-    __typename: string;
-    id: string;
-  };
+  renderer: MultiLineTextField_renderer$key;
   onChange?: (value: string) => void;
 }
 
-function MultiLineTextField({renderer, onChange}: MultiLineTextFieldProps) {
-  const data = useFragment(
+function MultiLineTextField({ renderer, onChange }: MultiLineTextFieldProps) {
+  const data = useFragment<MultiLineTextField_renderer$key>(
     graphql`
       fragment MultiLineTextField_renderer on MultiLineTextField {
         id
@@ -19,13 +17,8 @@ function MultiLineTextField({renderer, onChange}: MultiLineTextFieldProps) {
         required
       }
     `,
-    renderer,
-  ) as {
-    id: string;
-    name: string;
-    value?: string;
-    required: boolean;
-  };
+    renderer
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (onChange) {
@@ -39,11 +32,11 @@ function MultiLineTextField({renderer, onChange}: MultiLineTextFieldProps) {
         {data.name} {data.required && <span className="text-red-500">*</span>}
       </label>
       <textarea
-        value={data.value || ''}
+        value={data.value || ""}
         onChange={handleChange}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         rows={4}
-        required={data.required}
+        required={!!data.required}
       />
     </div>
   );
