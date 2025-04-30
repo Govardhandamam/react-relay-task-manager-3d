@@ -3,10 +3,7 @@ export const pageTasksPageQuery = graphql`
   query tasksQuery @preloadable {
     tasks {
       id
-      title
-      fields {
-        ...TaskFieldRenderer_field
-      }
+      ...TaskFragment @relay(plural: true)
     }
   }
 `;

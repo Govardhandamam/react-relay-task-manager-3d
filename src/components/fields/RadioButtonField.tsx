@@ -1,12 +1,14 @@
+"use client";
+
 import { RadioButtonField_renderer$key } from "@/__generated__/RadioButtonField_renderer.graphql";
-import React from "react";
+import React, { useState } from "react";
 import { useFragment, graphql } from "react-relay";
 
 interface RadioButtonFieldProps {
   renderer: RadioButtonField_renderer$key;
 }
 
-function RadioButtonField({ renderer }: RadioButtonFieldProps) {
+const RadioButtonField = ({ renderer }: RadioButtonFieldProps) => {
   const data = useFragment<RadioButtonField_renderer$key>(
     graphql`
       fragment RadioButtonField_renderer on RadioButtonField {
@@ -20,6 +22,14 @@ function RadioButtonField({ renderer }: RadioButtonFieldProps) {
     renderer
   );
 
+  const [selectedValue, setSelectedValue] = useState(data.value || "");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setSelectedValue(newValue);
+    console.log("RadioButtonField changed:", { fieldId: data.id, newValue });
+  };
+
   return (
     <div className="mb-4">
       <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -30,18 +40,19 @@ function RadioButtonField({ renderer }: RadioButtonFieldProps) {
           <label key={option} className="flex items-center">
             <input
               type="radio"
-              name={data.name}
+              name={data.id}
               value={option}
-              checked={data.value === option}
+              checked={selectedValue === option}
+              onChange={handleChange}
               className="mr-2"
-              required={!!data.required}
+              required={data.required ?? false}
             />
-            <span className="text-gray-700">{option}</span>
+            <span className="text-gray-700 text-sm">{option}</span>
           </label>
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default RadioButtonField;

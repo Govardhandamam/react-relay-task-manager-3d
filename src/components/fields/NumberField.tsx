@@ -1,5 +1,7 @@
+"use client";
+
 import { NumberField_renderer$key } from "../../__generated__/NumberField_renderer.graphql";
-import React from "react";
+import React, { useState } from "react";
 import { useFragment, graphql } from "react-relay";
 
 interface NumberFieldProps {
@@ -21,6 +23,14 @@ const NumberField = ({ renderer }: NumberFieldProps) => {
     renderer
   );
 
+  const [value, setValue] = useState(data.value || "");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setValue(newValue);
+    console.log("NumberField changed:", { fieldId: data.id, newValue });
+  };
+
   return (
     <div className="mb-4">
       <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -28,7 +38,8 @@ const NumberField = ({ renderer }: NumberFieldProps) => {
       </label>
       <input
         type="number"
-        value={data.value || ""}
+        value={value}
+        onChange={handleChange}
         min={data.min ?? undefined}
         max={data.max ?? undefined}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

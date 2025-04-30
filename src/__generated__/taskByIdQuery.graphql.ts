@@ -1,6 +1,6 @@
 /**
- * @generated SignedSource<<769f45ceb64761cd56aab6aca082c512>>
- * @relayHash b677bbb1c8ef69ad7d2b08e5f8cf83cc
+ * @generated SignedSource<<ef471400526ce76bb112ad06fcd3f0e0>>
+ * @relayHash 8ca778f87fed09062b3b6f2fcf90d8fb
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,24 +9,39 @@
 /* eslint-disable */
 // @ts-nocheck
 
-// @relayRequestID b677bbb1c8ef69ad7d2b08e5f8cf83cc
+// @relayRequestID 8ca778f87fed09062b3b6f2fcf90d8fb
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type tasksQuery$variables = Record<PropertyKey, never>;
-export type tasksQuery$data = {
-  readonly tasks: ReadonlyArray<{
-    readonly id: string;
-    readonly " $fragmentSpreads": FragmentRefs<"TaskFragment">;
-  }>;
+export type taskByIdQuery$variables = {
+  id: string;
 };
-export type tasksQuery = {
-  response: tasksQuery$data;
-  variables: tasksQuery$variables;
+export type taskByIdQuery$data = {
+  readonly task: {
+    readonly " $fragmentSpreads": FragmentRefs<"TaskFragment">;
+  } | null | undefined;
+};
+export type taskByIdQuery = {
+  response: taskByIdQuery$data;
+  variables: taskByIdQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -35,20 +50,19 @@ var v0 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "tasksQuery",
+    "name": "taskByIdQuery",
     "selections": [
       {
         "alias": null,
-        "args": null,
+        "args": (v1/*: any*/),
         "concreteType": "Task",
         "kind": "LinkedField",
-        "name": "tasks",
-        "plural": true,
+        "name": "task",
+        "plural": false,
         "selections": [
-          (v0/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -63,19 +77,19 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "tasksQuery",
+    "name": "taskByIdQuery",
     "selections": [
       {
         "alias": null,
-        "args": null,
+        "args": (v1/*: any*/),
         "concreteType": "Task",
         "kind": "LinkedField",
-        "name": "tasks",
-        "plural": true,
+        "name": "task",
+        "plural": false,
         "selections": [
-          (v0/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -122,7 +136,7 @@ return {
                         "fragmentPropName": "renderer",
                         "kind": "ModuleImport"
                       },
-                      (v0/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "NumberField",
                     "abstractKey": null
@@ -137,7 +151,7 @@ return {
                         "fragmentPropName": "renderer",
                         "kind": "ModuleImport"
                       },
-                      (v0/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "SingleLineTextField",
                     "abstractKey": null
@@ -152,7 +166,7 @@ return {
                         "fragmentPropName": "renderer",
                         "kind": "ModuleImport"
                       },
-                      (v0/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "MultiLineTextField",
                     "abstractKey": null
@@ -167,7 +181,7 @@ return {
                         "fragmentPropName": "renderer",
                         "kind": "ModuleImport"
                       },
-                      (v0/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "SelectDropdownField",
                     "abstractKey": null
@@ -182,7 +196,7 @@ return {
                         "fragmentPropName": "renderer",
                         "kind": "ModuleImport"
                       },
-                      (v0/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "CheckBoxField",
                     "abstractKey": null
@@ -197,7 +211,7 @@ return {
                         "fragmentPropName": "renderer",
                         "kind": "ModuleImport"
                       },
-                      (v0/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "RadioButtonField",
                     "abstractKey": null
@@ -212,7 +226,7 @@ return {
                         "fragmentPropName": "renderer",
                         "kind": "ModuleImport"
                       },
-                      (v0/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "StatusField",
                     "abstractKey": null
@@ -227,7 +241,7 @@ return {
                         "fragmentPropName": "renderer",
                         "kind": "ModuleImport"
                       },
-                      (v0/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "DateField",
                     "abstractKey": null
@@ -242,7 +256,7 @@ return {
                         "fragmentPropName": "renderer",
                         "kind": "ModuleImport"
                       },
-                      (v0/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "DateTimeField",
                     "abstractKey": null
@@ -259,18 +273,15 @@ return {
     ]
   },
   "params": {
-    "id": "b677bbb1c8ef69ad7d2b08e5f8cf83cc",
+    "id": "8ca778f87fed09062b3b6f2fcf90d8fb",
     "metadata": {},
-    "name": "tasksQuery",
+    "name": "taskByIdQuery",
     "operationKind": "query",
     "text": null
   }
 };
 })();
 
-(node as any).hash = "4fd8ee29e747c324018a91ff4b497309";
-
-import { PreloadableQueryRegistry } from 'relay-runtime';
-PreloadableQueryRegistry.set(node.params.id, node);
+(node as any).hash = "a7b58bcf38b84c4862c5d2ec7fc6d33f";
 
 export default node;

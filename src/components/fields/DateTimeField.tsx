@@ -1,12 +1,14 @@
+"use client";
+
 import { DateTimeField_renderer$key } from "@/__generated__/DateTimeField_renderer.graphql";
-import React from "react";
+import React, { useState } from "react";
 import { useFragment, graphql } from "react-relay";
 
 interface DateTimeFieldProps {
   renderer: DateTimeField_renderer$key;
 }
 
-function DateTimeField({ renderer }: DateTimeFieldProps) {
+const DateTimeField = ({ renderer }: DateTimeFieldProps) => {
   const data = useFragment<DateTimeField_renderer$key>(
     graphql`
       fragment DateTimeField_renderer on DateTimeField {
@@ -17,11 +19,14 @@ function DateTimeField({ renderer }: DateTimeFieldProps) {
       }
     `,
     renderer
-  ) as {
-    id: string;
-    name: string;
-    value?: string;
-    required: boolean;
+  );
+
+  const [value, setValue] = useState(data.value || "");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setValue(newValue);
+    console.log("DateTimeField changed:", { fieldId: data.id, newValue });
   };
 
   return (
@@ -31,12 +36,13 @@ function DateTimeField({ renderer }: DateTimeFieldProps) {
       </label>
       <input
         type="datetime-local"
-        value={data.value || ""}
+        value={value}
+        onChange={handleChange}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required={data.required}
+        required={data.required ?? false}
       />
     </div>
   );
-}
+};
 
 export default DateTimeField;

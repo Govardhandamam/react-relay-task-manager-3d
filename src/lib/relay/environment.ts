@@ -13,7 +13,7 @@ import {
 import moduleLoader, { registerLoader } from "../moduleLoader";
 
 export const networkFetch = async (request: any, variables: Variables) => {
-  const response: any = await fetch("http://localhost:3001/api/graphql", {
+  const response: any = await fetch("http://localhost:3000/api/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

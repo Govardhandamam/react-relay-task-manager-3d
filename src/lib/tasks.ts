@@ -81,7 +81,7 @@ interface Task {
 // Sample tasks data
 export const tasks: Task[] = [
   {
-    id: uuidv4(),
+    id: "1",
     title: "Complete Project Proposal",
     description: "Create a detailed proposal for the new project",
     status: "IN_PROGRESS",
@@ -110,19 +110,19 @@ export const tasks: Task[] = [
         options: ["Low", "Medium", "High", "Critical"],
         required: true,
       },
-      // {
-      //   id: uuidv4(),
-      //   __typename: "CheckBoxField",
-      //   name: "Requires Approval",
-      //   checked: true,
-      //   required: false,
-      // },
+      {
+        id: uuidv4(),
+        __typename: "CheckBoxField",
+        name: "Requires Approval",
+        checked: true,
+        required: false,
+      },
     ],
     createdAt: Date.now() - 14 * 24 * 60 * 60 * 1000, // 14 days ago
     updatedAt: Date.now() - 2 * 24 * 60 * 60 * 1000, // 2 days ago
   },
   {
-    id: uuidv4(),
+    id: "2",
     title: "Schedule Team Meeting",
     description: "Organize a meeting to discuss project progress",
     status: "TODO",
@@ -155,7 +155,7 @@ export const tasks: Task[] = [
     updatedAt: Date.now() - 1 * 24 * 60 * 60 * 1000, // 1 day ago
   },
   {
-    id: uuidv4(),
+    id: "3",
     title: "Review Code Changes",
     description:
       "Review the latest code changes for the task manager application",
