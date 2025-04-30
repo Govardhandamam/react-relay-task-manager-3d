@@ -21,9 +21,10 @@ export default function moduleLoader(name: string) {
     },
     get() {
       const loadedModule = loadedModules.get(name);
-      return loadedModule == null
-        ? null
-        : (loadedModule as { default: unknown }).default;
+      if (!loadedModule) return null;
+
+      // Return the default export for React components
+      return (loadedModule as { default: React.ComponentType }).default;
     },
     load() {
       const loader = loaders.get(name);
@@ -41,7 +42,7 @@ export default function moduleLoader(name: string) {
         return loader.loaderFn().then(
           (loadedModule) => {
             loadedModules.set(name, loadedModule);
-            return (loadedModule as { default: unknown }).default;
+            return (loadedModule as { default: React.ComponentType }).default;
           },
           (error: Error) => {
             failedModules.set(name, error);
@@ -67,7 +68,9 @@ export function registerLoader(name: string, loaderFn: () => Promise<unknown>) {
       (loadedModule) => {
         loadedModules.set(name, loadedModule);
         pendingLoaders.delete(name);
-        loader.resolve!((loadedModule as { default: unknown }).default);
+        loader.resolve!(
+          (loadedModule as { default: React.ComponentType }).default
+        );
       },
       (error: Error) => {
         failedModules.set(name, error);

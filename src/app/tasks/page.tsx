@@ -1,19 +1,8 @@
 import React from "react";
-import { graphql } from "react-relay";
+
 import { getPreloadedQuery } from "@/lib/relay/getServerSideProps";
 import { Tasks } from "@/components/Tasks";
-
-const pageTasksPageQuery = graphql`
-  query pageTasksPageQuery @preloadable {
-    tasks {
-      id
-      title
-      fields {
-        ...TaskFieldRenderer_field
-      }
-    }
-  }
-`;
+import { pageTasksPageQuery } from "@/queries/tasksQuery";
 
 const TasksPage = async () => {
   const queryRef = await getPreLoadedProps();

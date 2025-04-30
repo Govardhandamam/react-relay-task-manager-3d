@@ -4,10 +4,9 @@ import { useFragment, graphql } from "react-relay";
 
 interface CheckBoxFieldProps {
   renderer: CheckBoxField_renderer$key;
-  onChange?: (checked: boolean) => void;
 }
 
-function CheckBoxField({ renderer, onChange }: CheckBoxFieldProps) {
+function CheckBoxField({ renderer }: CheckBoxFieldProps) {
   const data = useFragment<CheckBoxField_renderer$key>(
     graphql`
       fragment CheckBoxField_renderer on CheckBoxField {
@@ -25,19 +24,12 @@ function CheckBoxField({ renderer, onChange }: CheckBoxFieldProps) {
     required: boolean;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (onChange) {
-      onChange(e.target.checked);
-    }
-  };
-
   return (
     <div className="mb-4">
       <label className="flex items-center">
         <input
           type="checkbox"
           checked={data.checked}
-          onChange={handleChange}
           className="mr-2"
           required={data.required}
         />

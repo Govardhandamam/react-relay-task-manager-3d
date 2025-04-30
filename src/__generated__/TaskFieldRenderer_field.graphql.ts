@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a86bde4a43d400985b3e233e01d52d8b>>
+ * @generated SignedSource<<31f923c377c1d3dd402f2885117017b4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,68 +12,25 @@
 
 import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TaskFieldRenderer_field$data = {
+export type TaskFieldRenderer_field$data = ReadonlyArray<{
   readonly renderer: {
-    readonly __typename: "CheckBoxField";
-    readonly __fragmentPropName: string | null | undefined;
-    readonly __module_component: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"CheckBoxField_renderer">;
-  } | {
-    readonly __typename: "DateField";
-    readonly __fragmentPropName: string | null | undefined;
-    readonly __module_component: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"DateField_renderer">;
-  } | {
-    readonly __typename: "DateTimeField";
-    readonly __fragmentPropName: string | null | undefined;
-    readonly __module_component: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"DateTimeField_renderer">;
-  } | {
-    readonly __typename: "MultiLineTextField";
-    readonly __fragmentPropName: string | null | undefined;
-    readonly __module_component: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"MultiLineTextField_renderer">;
-  } | {
-    readonly __typename: "NumberField";
-    readonly __fragmentPropName: string | null | undefined;
-    readonly __module_component: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"NumberField_renderer">;
-  } | {
-    readonly __typename: "RadioButtonField";
-    readonly __fragmentPropName: string | null | undefined;
-    readonly __module_component: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"RadioButtonField_renderer">;
-  } | {
-    readonly __typename: "SelectDropdownField";
-    readonly __fragmentPropName: string | null | undefined;
-    readonly __module_component: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"SelectDropdownField_renderer">;
-  } | {
-    readonly __typename: "SingleLineTextField";
-    readonly __fragmentPropName: string | null | undefined;
-    readonly __module_component: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"SingleLineTextField_renderer">;
-  } | {
-    readonly __typename: "StatusField";
-    readonly __fragmentPropName: string | null | undefined;
-    readonly __module_component: string | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"StatusField_renderer">;
-  } | {
-    // This will never be '%other', but we need some
-    // value in case none of the concrete values match.
-    readonly __typename: "%other";
+    readonly __fragmentPropName?: string | null | undefined;
+    readonly __module_component?: string | null | undefined;
+    readonly " $fragmentSpreads": FragmentRefs<"CheckBoxField_renderer" | "DateField_renderer" | "DateTimeField_renderer" | "MultiLineTextField_renderer" | "NumberField_renderer" | "RadioButtonField_renderer" | "SelectDropdownField_renderer" | "SingleLineTextField_renderer" | "StatusField_renderer">;
   } | null | undefined;
   readonly " $fragmentType": "TaskFieldRenderer_field";
-};
-export type TaskFieldRenderer_field$key = {
+}>;
+export type TaskFieldRenderer_field$key = ReadonlyArray<{
   readonly " $data"?: TaskFieldRenderer_field$data;
   readonly " $fragmentSpreads": FragmentRefs<"TaskFieldRenderer_field">;
-};
+}>;
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "plural": true
+  },
   "name": "TaskFieldRenderer_field",
   "selections": [
     {
@@ -90,13 +47,6 @@ const node: ReaderFragment = {
       "name": "renderer",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        },
         {
           "kind": "InlineFragment",
           "selections": [
@@ -231,6 +181,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d450570adeed294e1e262d19e51c583c";
+(node as any).hash = "dfa6ddc42f394fb9b27c208a17f02209";
 
 export default node;

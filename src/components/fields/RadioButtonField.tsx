@@ -4,10 +4,9 @@ import { useFragment, graphql } from "react-relay";
 
 interface RadioButtonFieldProps {
   renderer: RadioButtonField_renderer$key;
-  onChange?: (value: string) => void;
 }
 
-function RadioButtonField({ renderer, onChange }: RadioButtonFieldProps) {
+function RadioButtonField({ renderer }: RadioButtonFieldProps) {
   const data = useFragment<RadioButtonField_renderer$key>(
     graphql`
       fragment RadioButtonField_renderer on RadioButtonField {
@@ -20,12 +19,6 @@ function RadioButtonField({ renderer, onChange }: RadioButtonFieldProps) {
     `,
     renderer
   );
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (onChange) {
-      onChange(e.target.value);
-    }
-  };
 
   return (
     <div className="mb-4">
@@ -40,7 +33,6 @@ function RadioButtonField({ renderer, onChange }: RadioButtonFieldProps) {
               name={data.name}
               value={option}
               checked={data.value === option}
-              onChange={handleChange}
               className="mr-2"
               required={!!data.required}
             />

@@ -4,10 +4,9 @@ import { useFragment, graphql } from "react-relay";
 
 interface StatusFieldProps {
   renderer: StatusField_renderer$key;
-  onChange?: (value: string) => void;
 }
 
-function StatusField({ renderer, onChange }: StatusFieldProps) {
+function StatusField({ renderer }: StatusFieldProps) {
   const data = useFragment<StatusField_renderer$key>(
     graphql`
       fragment StatusField_renderer on StatusField {
@@ -20,12 +19,6 @@ function StatusField({ renderer, onChange }: StatusFieldProps) {
     `,
     renderer
   );
-
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (onChange) {
-      onChange(e.target.value);
-    }
-  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -49,7 +42,6 @@ function StatusField({ renderer, onChange }: StatusFieldProps) {
       </label>
       <select
         value={data.value || ""}
-        onChange={handleChange}
         className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${getStatusColor(
           data.value || ""
         )}`}

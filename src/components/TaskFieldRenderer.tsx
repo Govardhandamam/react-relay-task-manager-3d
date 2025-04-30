@@ -4,15 +4,13 @@ import type { TaskFieldRenderer_field$key } from "../__generated__/TaskFieldRend
 
 interface TaskFieldRendererProps {
   data: TaskFieldRenderer_field$key;
-  onChange?: (value: unknown) => void;
 }
 
-export function TaskFieldRenderer({ data, onChange }: TaskFieldRendererProps) {
-  const fieldData = useFragment(
+export function TaskFieldRenderer({ data }: TaskFieldRendererProps) {
+  const fieldData = useFragment<TaskFieldRenderer_field$key>(
     graphql`
-      fragment TaskFieldRenderer_field on TaskField {
+      fragment TaskFieldRenderer_field on TaskField @relay(plural: true) {
         renderer @match {
-          __typename
           ...NumberField_renderer @module(name: "NumberField")
           ...SingleLineTextField_renderer @module(name: "SingleLineTextField")
           ...MultiLineTextField_renderer @module(name: "MultiLineTextField")
@@ -28,9 +26,10 @@ export function TaskFieldRenderer({ data, onChange }: TaskFieldRendererProps) {
     data
   );
 
-  if (!fieldData?.renderer) {
+  if (!fieldData?.length) {
     return null;
   }
-
-  return <RelayMatchContainer match={fieldData.renderer} onChange={onChange} />;
+  return fieldData.map((field, idx) => (
+    <RelayMatchContainer key={idx} match={field.renderer} />
+  ));
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Environment,
   Network,
@@ -9,7 +10,23 @@ import {
   OperationLoader,
   NormalizationSplitOperation,
 } from "relay-runtime";
-import moduleLoader from "../moduleLoader";
+import moduleLoader, { registerLoader } from "../moduleLoader";
+
+export const networkFetch = async (request: any, variables: Variables) => {
+  const response: any = await fetch("http://localhost:3001/api/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: request.id,
+      name: request.name,
+      query: request.text,
+      variables,
+    }),
+  });
+  return response.json();
+};
 
 const fetchRelay: FetchFunction = async (
   request: RequestParameters,
@@ -17,20 +34,11 @@ const fetchRelay: FetchFunction = async (
 ) => {
   console.log("Relay request:", { id: request.id, name: request.name });
 
-  const response = await fetch("http://localhost:3000/api/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: request.id,
-      query: request.text,
-      variables,
-    }),
-  });
+  const result: any = await networkFetch(request, variables);
 
-  const result = await response.json();
-
+  if (Array.isArray(result.extensions?.modules)) {
+    registerModuleLoaders(result.extensions.modules);
+  }
   if (result.errors) {
     console.error("GraphQL errors:", result.errors);
   }
@@ -73,6 +81,21 @@ function createEnvironment() {
 
 let environment: Environment | undefined;
 
+function registerModuleLoaders(modules: string[]) {
+  for (const eachModule of modules) {
+    if (eachModule.endsWith("$normalization.graphql")) {
+      registerLoader(
+        eachModule,
+        () => import(`../../__generated__/${eachModule}`)
+      );
+    } else {
+      registerLoader(
+        eachModule,
+        () => import(`../../components/fields/${eachModule}`)
+      );
+    }
+  }
+}
 export function getClientEnvironment() {
   if (IS_SERVER) {
     return createEnvironment();

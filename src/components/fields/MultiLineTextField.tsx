@@ -4,10 +4,9 @@ import { useFragment, graphql } from "react-relay";
 
 interface MultiLineTextFieldProps {
   renderer: MultiLineTextField_renderer$key;
-  onChange?: (value: string) => void;
 }
 
-function MultiLineTextField({ renderer, onChange }: MultiLineTextFieldProps) {
+function MultiLineTextField({ renderer }: MultiLineTextFieldProps) {
   const data = useFragment<MultiLineTextField_renderer$key>(
     graphql`
       fragment MultiLineTextField_renderer on MultiLineTextField {
@@ -20,12 +19,6 @@ function MultiLineTextField({ renderer, onChange }: MultiLineTextFieldProps) {
     renderer
   );
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (onChange) {
-      onChange(e.target.value);
-    }
-  };
-
   return (
     <div className="mb-4">
       <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -33,7 +26,6 @@ function MultiLineTextField({ renderer, onChange }: MultiLineTextFieldProps) {
       </label>
       <textarea
         value={data.value || ""}
-        onChange={handleChange}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         rows={4}
         required={!!data.required}

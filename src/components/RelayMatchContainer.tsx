@@ -4,11 +4,6 @@ import moduleLoader from "../lib/moduleLoader";
 import ErrorBoundary from "./ErrorBoundary";
 import { Button } from "./LayoutComponents";
 
-// Define a proper type for the match parameter
-interface MatchType {
-  [key: string]: unknown;
-}
-
 // Define the ModuleLoaderError class before using it
 class ModuleLoaderError extends Error {
   moduleLoaderName: string;
@@ -22,8 +17,7 @@ class ModuleLoaderError extends Error {
 }
 
 interface RelayMatchContainerProps {
-  match: MatchType;
-  onChange?: (value: unknown) => void;
+  match: unknown;
 }
 
 export default function RelayMatchContainer({
@@ -53,7 +47,7 @@ export default function RelayMatchContainer({
     >
       <MatchContainer
         match={match}
-        loader={(name: string): Promise<unknown> => {
+        loader={(name: string) => {
           const loader = moduleLoader(name);
           const error = loader.getError();
           if (error) {
@@ -61,9 +55,9 @@ export default function RelayMatchContainer({
           }
           const loadedModule = loader.get();
           if (loadedModule != null) {
-            return Promise.resolve(loadedModule);
+            return loadedModule;
           }
-          return loader.load() as Promise<unknown>;
+          throw loader.load();
         }}
       />
     </ErrorBoundary>

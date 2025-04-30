@@ -110,13 +110,13 @@ export const tasks: Task[] = [
         options: ["Low", "Medium", "High", "Critical"],
         required: true,
       },
-      {
-        id: uuidv4(),
-        __typename: "CheckBoxField",
-        name: "Requires Approval",
-        checked: true,
-        required: false,
-      },
+      // {
+      //   id: uuidv4(),
+      //   __typename: "CheckBoxField",
+      //   name: "Requires Approval",
+      //   checked: true,
+      //   required: false,
+      // },
     ],
     createdAt: Date.now() - 14 * 24 * 60 * 60 * 1000, // 14 days ago
     updatedAt: Date.now() - 2 * 24 * 60 * 60 * 1000, // 2 days ago

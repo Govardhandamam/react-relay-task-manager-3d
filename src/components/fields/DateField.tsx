@@ -4,10 +4,9 @@ import { useFragment, graphql } from "react-relay";
 
 interface DateFieldProps {
   renderer: DateField_renderer$key;
-  onChange?: (value: string) => void;
 }
 
-function DateField({ renderer, onChange }: DateFieldProps) {
+function DateField({ renderer }: DateFieldProps) {
   const data = useFragment<DateField_renderer$key>(
     graphql`
       fragment DateField_renderer on DateField {
@@ -25,12 +24,6 @@ function DateField({ renderer, onChange }: DateFieldProps) {
     required: boolean;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (onChange) {
-      onChange(e.target.value);
-    }
-  };
-
   return (
     <div className="mb-4">
       <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -39,7 +32,6 @@ function DateField({ renderer, onChange }: DateFieldProps) {
       <input
         type="date"
         value={data.value || ""}
-        onChange={handleChange}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         required={data.required}
       />
