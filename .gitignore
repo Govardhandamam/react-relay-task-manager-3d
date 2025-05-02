@@ -40,7 +40,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 **/__generated__/
-*.graphql
-*.graphql.ts
-*.graphql.tsx
 queryMap.json

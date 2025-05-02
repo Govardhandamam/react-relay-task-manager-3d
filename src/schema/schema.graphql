@@ -1,0 +1,158 @@
+type Query {
+  viewer: Viewer
+  task(id: ID!): Task
+  tasks: [Task!]!
+}
+
+type Viewer {
+  allTasks(first: Int, after: String, orderBy: OrderBy): TaskConnection
+}
+
+type TaskConnection {
+  edges: [TaskConnectionEdge]
+  pageInfo: TaskConnectionPageInfo
+}
+
+type TaskConnectionEdge {
+  node: Task
+  cursor: String
+}
+
+type Task {
+  id: ID!
+  title: String!
+  description: String
+  status: TaskStatus!
+  dueDate: DateTime
+  fields: [TaskField!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type TaskField {
+  renderer(supported: [String]): TaskFieldRendererUnion
+}
+
+union TaskFieldRendererUnion =
+    NumberField
+  | SingleLineTextField
+  | MultiLineTextField
+  | SelectDropdownField
+  | CheckBoxField
+  | RadioButtonField
+  | StatusField
+  | DateField
+  | DateTimeField
+
+type NumberField {
+  id: ID!
+  name: String!
+  required: Boolean
+  __typename: String
+  value: String
+  min: Float
+  max: Float
+  js(module: String!, id: String): JSDependency
+}
+
+type SingleLineTextField {
+  id: ID!
+  name: String!
+  required: Boolean
+  __typename: String
+  value: String
+  js(module: String!, id: String): JSDependency
+}
+
+type MultiLineTextField {
+  id: ID!
+  name: String!
+  required: Boolean
+  __typename: String
+  value: String
+  js(module: String!, id: String): JSDependency
+}
+
+type SelectDropdownField {
+  id: ID!
+  name: String!
+  required: Boolean
+  __typename: String
+  value: String
+  options: [String!]!
+  js(module: String!, id: String): JSDependency
+}
+
+type CheckBoxField {
+  id: ID!
+  name: String!
+  required: Boolean
+  __typename: String
+  checked: Boolean
+  js(module: String!, id: String): JSDependency
+}
+
+type RadioButtonField {
+  id: ID!
+  name: String!
+  required: Boolean
+  __typename: String
+  value: String
+  options: [String!]!
+  js(module: String!, id: String): JSDependency
+}
+
+type StatusField {
+  id: ID!
+  name: String!
+  required: Boolean
+  __typename: String
+  value: String
+  options: [String!]!
+  js(module: String!, id: String): JSDependency
+}
+
+type DateField {
+  id: ID!
+  name: String!
+  required: Boolean
+  __typename: String
+  value: String
+  js(module: String!, id: String): JSDependency
+}
+
+type DateTimeField {
+  id: ID!
+  name: String!
+  required: Boolean
+  __typename: String
+  value: String
+  js(module: String!, id: String): JSDependency
+}
+
+scalar DateTime
+
+scalar JSDependency
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+  CANCELLED
+}
+
+type TaskConnectionPageInfo {
+  startCursor: String
+  endCursor: String
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+}
+
+input OrderBy {
+  createdAt: Order
+}
+
+enum Order {
+  asc
+  desc
+}

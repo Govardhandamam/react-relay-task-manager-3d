@@ -21,6 +21,8 @@ const JSDependencyType = new GraphQLScalarType({
   serialize: (value) => value,
 });
 
+const seenDataDrivenDependencies = new Set();
+
 const JSDependencyField = {
   args: {
     module: { type: new GraphQLNonNull(GraphQLString) },
@@ -32,8 +34,6 @@ const JSDependencyField = {
     return module;
   },
 };
-
-const seenDataDrivenDependencies = new Set();
 
 export const dataDrivenDependencies = {
   reset() {
