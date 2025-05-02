@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "mkdir -p __generated__ && touch queryMap.json && concurrently \"next dev --turbopack\" \"relay-compiler --watch\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
